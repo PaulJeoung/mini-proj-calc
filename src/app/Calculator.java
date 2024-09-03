@@ -1,8 +1,9 @@
 /* 
  * Author        : pj
  * Class Name    : System.java
- * modified date : 2024-08-29
+ * modified date : 2024-09-03
  * description   : 계산기 전원 ON/OFF
+ * modified      : 로직 수정
  * */
 package app;
 
@@ -23,47 +24,61 @@ public class Calculator {
 	}
 	
 	public void runSystem () {
+		InputReceiver menu = new InputReceiver();
+		InputReceiver numbers = new InputReceiver();
+		
 		System.out.println(SysMessage.valueOf("SYSTEM_ON"));
+		double temp = 0, firstNumber = 0, secondNumber = 0;
+		
 		while (power) {
 			
-			System.out.println(SysMessage.valueOf("BOARD_LINE"));
-			System.out.println(SysMessage.valueOf("MENU_SET"));
+			System.out.println("콘솔계산기 사용 방법\n1.숫자 입력 | 2.연산자 입력 | 3.숫자 입력 | 4.결과 확인  | 5.종료 [q]");
+			System.out.println("Enter를 누르면 누적 계산이 됩니다. 초기화 하려면 [c]를 누르세요");
 			
-			InputReceiver inputReceiver = new InputReceiver();			
+			firstNumber = numbers.receiveDoubleInput("숫자 입력> ");
+			String selectNo = menu.receiveStringInput("\n연산자 입력 [+][-][*][/] 선택 > ");
 			
-			int selectNo = inputReceiver.receiveIntInput("선택 > ");
+//			if (selectNo.equals(MenuSelector.EXIT)) {
+//				System.out.println(SysMessage.valueOf("SYSTEM_OFF"));
+//				power = false;
+//			}
 			
-			if (selectNo == MenuSelector.PLUS) {
-				System.out.println(selectNo + "번, 덧셈을 하겠습니다. 차례대로 2개의 숫자를 넣으세요");
-				double plusA = inputReceiver.receiveDoubleInput("숫자1 > ");
-				double plusB = inputReceiver.receiveDoubleInput("숫자2 > ");
-				System.out.print(SysMessage.valueOf("CALC_RESULT"));
-				System.out.print(FourBasicOperation.plus(plusA, plusB)+"\n");
-			} else if (selectNo == MenuSelector.MINUS) {
-				System.out.println(selectNo + "번, 뺄셈을 하겠습니다. 차례대로 2개의 숫자를 넣으세요");
-				double minusA = inputReceiver.receiveDoubleInput("숫자1 > ");
-				double minusB = inputReceiver.receiveDoubleInput("숫자2 > ");
-				System.out.print(SysMessage.valueOf("CALC_RESULT"));
-				System.out.println(FourBasicOperation.minus(minusA, minusB)+"\n");
-			} else if (selectNo == MenuSelector.MULTIPLE) {
-				System.out.println(selectNo + "번, 곱셈을 하겠습니다. 차례대로 2개의 숫자를 넣으세요");
-				double multipleA = inputReceiver.receiveDoubleInput("숫자1 > ");
-				double multipleB = inputReceiver.receiveDoubleInput("숫자2 > ");
-				System.out.print(SysMessage.valueOf("CALC_RESULT"));
-				System.out.println(FourBasicOperation.multiple(multipleA, multipleB)+"\n");
-			} else if (selectNo == MenuSelector.DEVIDE) {
-				System.out.println(selectNo + "번, 나눗셈을 하겠습니다. 차례대로 2개의 숫자를 넣으세요");
-				double devideA = inputReceiver.receiveDoubleInput("숫자1 > ");
-				double devideB = inputReceiver.receiveDoubleInput("숫자2 > ");
-				System.out.print(SysMessage.valueOf("CALC_RESULT"));
-				System.out.println(FourBasicOperation.divide(devideA, devideB)+"\n");
-			} else if (selectNo == MenuSelector.EXIT) {
-				System.out.println(SysMessage.valueOf("SYSTEM_OFF"));
-				power = false;
+			if (temp == 0) {
+				secondNumber = numbers.receiveDoubleInput("숫자입력 > ");
+			} else {
+				secondNumber = temp;
+			}
+			
+			if (selectNo.equals(MenuSelector.PLUS)) {
+				double result = FourBasicOperation.plus(secondNumber, firstNumber);
+				System.out.println("계산 : "+ firstNumber + " " + selectNo + " " + secondNumber + " = " + result);
+				temp = result;
+				temp = tempClear(temp);
+			} else if (selectNo.equals(MenuSelector.MINUS)) {
+				double result = FourBasicOperation.minus(secondNumber, firstNumber);
+				System.out.println("계산 : "+ firstNumber + " " + selectNo + " " + secondNumber + " = " + result);
+				temp = result;
+				temp = tempClear(temp);
+			} else if (selectNo.equals(MenuSelector.MULTIPLY)) {
+				double result = FourBasicOperation.multiply(secondNumber, firstNumber);
+				System.out.println("계산 : "+ firstNumber + " " + selectNo + " " + secondNumber + " = " + result);
+				temp = result;
+				temp = tempClear(temp);
+			} else if (selectNo.equals(MenuSelector.DEVIDE)) {
+				double result = FourBasicOperation.divide(firstNumber, secondNumber);
+				System.out.println("계산 : "+ firstNumber + " " + selectNo + " " + secondNumber + " = " + result);
+				temp = result;
+				temp = tempClear(temp);
 			} else {
 				System.out.println(SysMessage.valueOf("INVALID_INPUT"));
 			}
 		}
 	}
 	
+	public double tempClear(double temp) {
+		InputReceiver clear = new InputReceiver();
+		String selectNo =  clear.receiveStringInput("초기화 하시겠습니까? c");
+		temp = (selectNo.equals(MenuSelector.CLEAR)) ? 0 : temp;
+		return temp;
+	}
 }

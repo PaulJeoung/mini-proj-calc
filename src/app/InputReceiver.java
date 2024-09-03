@@ -21,7 +21,7 @@ public class InputReceiver {
 		return scanner.nextLine();
 	}
 	
-	// 정수 입력 받기
+	// 정수 입력 받기 (미사용)
 	public int receiveIntInput(String prompt) {
 		System.out.println(prompt);
 		while (!scanner.hasNextInt()) {

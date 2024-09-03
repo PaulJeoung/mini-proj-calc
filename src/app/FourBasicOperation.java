@@ -3,6 +3,7 @@
  * Class Name    : FourBasicOperation.java
  * modified date : 2024-09-01
  * description   : 계산기의 연산을 처리
+ * modified      : multiple 변경
  * */
 package app;
 
@@ -18,7 +19,7 @@ public class FourBasicOperation {
 		return result;
 	}
 	
-	static double multiple (double x, double y) {
+	static double multiply (double x, double y) {
 		double result = x * y;
 		return result;
 	}

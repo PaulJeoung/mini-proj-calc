@@ -3,6 +3,7 @@
  * Class Name    : FourBasicOperation.java
  * modified date : 2024-09-01
  * description   : 계산기의 연산을 처리
+ * modified      : 메시지 삭제
  * */
 package app;
 
@@ -18,8 +19,6 @@ public enum SysMessage {
 	SYSTEM_OPERATING("MSG_002", "전원이 켜져 있습니다"),
 	
 	CALC_RESULT("MSG_100", "결과 : "),
-	BOARD_LINE("MSG_101", "----------------------------------------"),
-	MENU_SET("MSG_102", "1.덧셈 | 2.뺄셈 | 3.곱셉 | 4.나눗셈 | 5.종료"),
 	MENU_SELECT("MSG_103", "선택 > "),
 	INPUT_VALUE_1("MSG_104", "1번째 숫자 > "),
 	INPUT_VALUE_2("MSG_105", "2번째 숫자 > "),
